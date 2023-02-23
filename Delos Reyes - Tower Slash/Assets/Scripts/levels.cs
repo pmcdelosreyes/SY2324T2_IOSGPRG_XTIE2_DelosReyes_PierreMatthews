@@ -6,45 +6,27 @@ using UnityEngine.SceneManagement;
 public class levels : MonoBehaviour
 {
     public GameObject diffPanel;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void play()
     {
         diffPanel.SetActive(true);
     }
-
     public void quit()
     {
         Debug.Log("Game Exited");
         Application.Quit();
     }
-
     public void back()
     {
       diffPanel.SetActive(false);
     }
-
     public void easy()
     {
       SceneManager.LoadScene("easy");
     }
-
     public void medium()
     {
       SceneManager.LoadScene("medium");
     }
-
     public void hard()
     {
       SceneManager.LoadScene("hard");

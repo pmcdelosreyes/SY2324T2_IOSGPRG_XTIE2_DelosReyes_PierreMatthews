@@ -20,8 +20,6 @@ public class PlayerMovement : MonoBehaviour
     public float iniSpeed = 3f;
     public float speed;
     public Transform player;
-    //private Rigidbody2D rb;
-    //private Vector2 playerDirection;
 
     public float health = 3;
     private Text hpTxt;
@@ -41,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header ("Difficulty Feats")]
     public bool medium; //check if this the medium difficulty
-    public bool hard; //check if this is the hard difficulty\
+    public bool hard; //check if this is the hard difficulty
 
     public float[] scoreMults = {1f, 1.5f, 2f};
     public float scoreMult;
@@ -50,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         swipeControls = GetComponent<Swipe>();
-        //rb = player.GetComponent<Rigidbody2D>();
         hpTxt = hpText.GetComponent<Text>();
         speed = iniSpeed;
 
@@ -69,9 +66,6 @@ public class PlayerMovement : MonoBehaviour
     {
         hpTxt.text = "x 0" + health;
 
-        //float directionY = Input.GetAxis("Vertical"); //for pressing keys/ remove later becos we're gonna use swipe controls
-        //playerDirection = new Vector2(0, directionY).normalized; //replace directionY later
-
         if(swipeControls.Tap){
           Dash();
         }
@@ -79,15 +73,8 @@ public class PlayerMovement : MonoBehaviour
         Nearby();
         Powerups();
     }
-
-    /*void LateUpdate()
-    {
-      //rb.velocity = new Vector2(0, playerDirection.y* speed);
-    }*/
-
     void Dash()
     {
-      //Debug.Log ("Tap!");
       speed *= 2; //speed up!
     }
 
@@ -97,9 +84,8 @@ public class PlayerMovement : MonoBehaviour
 
       foreach (GameObject o in obstacles){
         float distToEnemy = Vector2.Distance(transform.GetChild(1).position, o.transform.position);
-        if (distToEnemy < boundary){
-          //Debug.Log(distToEnemy);
-
+        if (distToEnemy < boundary)
+        {
           nearest = o;
           nArrowNF = nearest.transform.GetChild(1).GetChild(0).gameObject; //get their arrows
           nArrowF = nearest.transform.GetChild(1).GetChild(1).gameObject;
@@ -115,24 +101,24 @@ public class PlayerMovement : MonoBehaviour
 
     void Powerups()
     { //numbers here are the ones that check
-      if(combo % 27 == 0 && combo != 0){ //shields are one time use
+      if(combo % 27 == 0 && combo != 0)
+      { //shields are one time use
         shield = true; //turn shield on off
         shieldCnt++;
         icons[0].SetActive(true);
-        //Debug.Log("shield: "+shield);
       }
-      else if (combo % 59 == 0 && combo != 0 && !freeze){
+      else if (combo % 59 == 0 && combo != 0 && !freeze)
+      {
         powersurge = true;
         surgeCnt = 15;
         speed *= 5;
         icons[1].SetActive(true);
-        //Debug.Log("surge: "+powersurge);
       }
-      else if (combo  %  17 == 0 && combo != 0 && !powersurge){
+      else if (combo  %  17 == 0 && combo != 0 && !powersurge)
+      {
         freeze = true;
         freezeCnt = 10;
         icons[2].SetActive(true);
-        //Debug.Log("freeze: "+freeze);
       }
     }
 }
