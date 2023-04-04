@@ -21,8 +21,6 @@ public class PlayerBehavior : Unit
     public Camera cam;
     Vector2 movement;
     Vector2 aimPos;
-
-    // Start is called before the first frame update
     void Start()
     {
       curHP = GetMaxHP();
@@ -30,8 +28,6 @@ public class PlayerBehavior : Unit
       SetPrimWeapon();
       SetSecWeapon();
     }
-
-    // Update is called once per frame
     void Update()
     {
       movement.x = leftDpad.Horizontal * speed;
@@ -44,11 +40,9 @@ public class PlayerBehavior : Unit
 
     void FixedUpdate()
     {
-      //Joystick method
       rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
       float angle = Mathf.Atan2(aimPos.y, aimPos.x)*Mathf.Rad2Deg;
       rb.rotation = angle;
-
     }
     public void SwitchWeapon()
     {
@@ -96,16 +90,20 @@ public class PlayerBehavior : Unit
       }
     }
     private void UpdateBulletTexts()
-    { //just to update ui texts
+    {
       if (primActive)
       {
-        activeBulletText.GetComponent<Text>().text = primarySlot.transform.GetChild(0).GetComponent<Gun>().curBulletAmt.ToString();
-        activeClipText.GetComponent<Text>().text = primarySlot.transform.GetChild(0).GetComponent<Gun>().clipAmt.ToString();
+        activeBulletText.GetComponent<Text>().text = 
+            primarySlot.transform.GetChild(0).GetComponent<Gun>().curBulletAmt.ToString();
+        activeClipText.GetComponent<Text>().text = 
+            primarySlot.transform.GetChild(0).GetComponent<Gun>().clipAmt.ToString();
       }
       else
       {
-        activeBulletText.GetComponent<Text>().text = secondarySlot.transform.GetChild(0).GetComponent<Gun>().curBulletAmt.ToString();
-        activeClipText.GetComponent<Text>().text = secondarySlot.transform.GetChild(0).GetComponent<Gun>().clipAmt.ToString();
+        activeBulletText.GetComponent<Text>().text = 
+            secondarySlot.transform.GetChild(0).GetComponent<Gun>().curBulletAmt.ToString();
+        activeClipText.GetComponent<Text>().text = 
+            secondarySlot.transform.GetChild(0).GetComponent<Gun>().clipAmt.ToString();
       }
     }
 }

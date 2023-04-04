@@ -19,7 +19,6 @@ public class EnemyAI : Unit
     public GameObject nearestOpp;
     public GameObject[] GetOpponents() {return opponents;}
 
-    // Start is called before the first frame update
     void Start()
     {
       opponents = GameObject.FindGameObjectsWithTag("Opponents");
@@ -30,8 +29,6 @@ public class EnemyAI : Unit
       SetSecWeapon();
       SetNewDestination();
     }
-
-    // Update is called once per frame
     void Update()
     {
       Nearby();
@@ -57,17 +54,12 @@ public class EnemyAI : Unit
       {
           Vector2 lookDir = ((Vector2)o.transform.position - rb.position);
           float distance = Vector2.Distance(transform.position, o.transform.position);
-          //Debug.Log(this.name + "/ " + o.name + distance);
-          //for rotation
-
           float angle = Mathf.Atan2(lookDir.y, lookDir.x)*Mathf.Rad2Deg +90f;
           rb.rotation = angle;
 
-          //check whos nearest among the opponents
           if (distance < spotRadius)
             {
                 nearestOpp = o;
-                //Debug.Log(this.name + " has spotted " + nearestOpp.name);
                 movement = lookDir;
                 closeness = distance;
                 isSpotted = true;
@@ -82,26 +74,22 @@ public class EnemyAI : Unit
     {
       waypoint = new Vector2(Random.Range(-maxX, maxX), Random.Range(-maxY, maxY));
     }
-
     void Wander()
     {
       transform.position = Vector2.MoveTowards(transform.position, waypoint, speed*Time.deltaTime);
       if (Vector2.Distance(transform.position, waypoint) < wanderCloseness)
       {
-        SetNewDestination(); //reset
+        SetNewDestination();
       }
       Debug.Log("is roaming...");
     }
-
     void Chase(Vector2 direction, float distance)
     {
       rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
-      //Debug.Log("is chasing!");
     }
 
     void Shoot()
     {
-      //Debug.Log("Gun fired");
       if (primActive)
       {
         primarySlot.transform.GetChild(0).GetComponent<Gun>().StartFiring();

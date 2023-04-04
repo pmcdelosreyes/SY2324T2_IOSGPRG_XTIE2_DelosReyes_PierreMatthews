@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
-{//lootable item and should also appeear on player
+{
     public bool owner;
     public Collider2D colliderComp;
 
@@ -32,7 +32,7 @@ public class Gun : MonoBehaviour
       colliderComp = GetComponent<Collider2D>();
       if (!owner)
       {
-        colliderComp.enabled = true; //setting it here because fro some reason the prefabs keep turning off???
+        colliderComp.enabled = true;
       }
       curBulletAmt = maxBulletAmt;
       clipAmt = clipCpcty;
@@ -41,7 +41,7 @@ public class Gun : MonoBehaviour
     public void Fire()
     {
       if (clipAmt > 0)
-      { //shoot only if not empty
+      {
         if (pistol)
         {
           GameObject b = Instantiate(bullet, nozzle.position, nozzle.rotation);
@@ -62,7 +62,7 @@ public class Gun : MonoBehaviour
           clipAmt--;
         }
         else if (AR)
-        { //still needs a keydown
+        {
           Quaternion pellet = Random.rotation;
           GameObject b = Instantiate(bullet, nozzle.position, nozzle.rotation);
           b.transform.rotation = Quaternion.RotateTowards(b.transform.rotation, pellet, spread);
@@ -83,23 +83,20 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            clipAmt += curBulletAmt; //give everything
+            clipAmt += curBulletAmt;
             curBulletAmt -= curBulletAmt;
         }
       }
       else Debug.Log("No more bullets!");
     }
-
-    public void StopFiring() //for AI use
+    public void StartFiring() //for AI use
+    {
+        InvokeRepeating("Fire", fireRate, fireRate);
+    }
+    public void StopFiring()
     {
       CancelInvoke("Fire");
     }
-
-    public void StartFiring() //for AI use
-    {
-      InvokeRepeating("Fire", fireRate, fireRate);
-    }
-
     void OnTriggerEnter2D (Collider2D collider)
     {
       if (collider.tag == "Opponents")
@@ -109,12 +106,12 @@ public class Gun : MonoBehaviour
         {
           if (!uScript.primOcc)
           {
-            this.gameObject.transform.position = new Vector2(0,0); //resets it so thats its realtive to parent's tranasform
+            this.gameObject.transform.position = new Vector2(0,0);
             this.gameObject.transform.SetParent(uScript.primarySlot.transform, false);
           }
           else 
           {
-            Destroy(uScript.primarySlot.transform.GetChild(0).gameObject); //destroy the first one
+            Destroy(uScript.primarySlot.transform.GetChild(0).gameObject);
             this.gameObject.transform.position = new Vector2(0,0);
             this.gameObject.transform.SetParent(uScript.primarySlot.transform, false);
           }
@@ -128,12 +125,12 @@ public class Gun : MonoBehaviour
           }
           else 
           {
-            Destroy(uScript.secondarySlot.transform.GetChild(0).gameObject); //destroy the first one
+            Destroy(uScript.secondarySlot.transform.GetChild(0).gameObject);
             this.gameObject.transform.position = new Vector2(0,0);
             this.gameObject.transform.SetParent(uScript.secondarySlot.transform, false);
           }
         }
-        colliderComp.enabled = false; //turn it off after pickup
+        colliderComp.enabled = false;
       }
     }
 }

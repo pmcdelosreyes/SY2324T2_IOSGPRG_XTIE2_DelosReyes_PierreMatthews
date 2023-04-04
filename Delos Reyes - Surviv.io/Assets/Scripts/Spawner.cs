@@ -15,16 +15,16 @@ public class Spawner : MonoBehaviour
     public int gunAmt;
 
     [Header ("Ammos")]
-    public GameObject[] ammos; //lootables
+    public GameObject[] ammos; //loot
     public GameObject ammo;
     public int ammoAmt;
 
     [Header ("Opponents")]
-    public GameObject[] enemies; //lootables
+    public GameObject[] enemies; //loot
     public GameObject enemy;
     public int enemyAmt;
 
-    //position range of where it can spawn(?)
+    //position range
     [Header ("Spawn Range")]
     private float maxY = 24;
     private float minY = -24;
@@ -33,8 +33,6 @@ public class Spawner : MonoBehaviour
 
     private float randomX;
     private float randomY;
-
-    // Start is called before the first frame update
     void Start()
     {
       Spawn(obstacles, obstacle, obstacleAmt);
@@ -44,10 +42,9 @@ public class Spawner : MonoBehaviour
     }
     void Spawn(GameObject[] arrays, GameObject array, int amount)
     {
-
       for (var i = 0; i < amount; i++)
-      { //loop accdg to how many u want in the scene
-        array = arrays[Random.Range(0, arrays.Length)]; //randomize which item from the list is assigned
+      { 
+        array = arrays[Random.Range(0, arrays.Length)];
         Randomize();
         Instantiate(array, transform.position + new Vector3(randomX,randomY, 0), transform.rotation);
       }
@@ -56,6 +53,5 @@ public class Spawner : MonoBehaviour
     {
         randomY = Random.Range(minY, maxY);
         randomX = Random.Range(minX, maxX);
-        //timeBetwSpawn = Random.Range(minTRange * mult, maxTRange * mult);
     }
 }

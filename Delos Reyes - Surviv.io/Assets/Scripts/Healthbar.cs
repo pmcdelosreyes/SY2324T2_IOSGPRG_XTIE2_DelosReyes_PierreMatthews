@@ -7,7 +7,6 @@ public class Healthbar : MonoBehaviour
 {
     public Slider slider; //visualization of healthbar
     public GameObject owner; //get slider component from owner
-
     void Start()
     {
       slider = this.gameObject.GetComponent<Slider>();

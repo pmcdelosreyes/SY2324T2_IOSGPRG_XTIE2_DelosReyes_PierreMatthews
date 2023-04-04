@@ -15,7 +15,6 @@ public class MoveByTouch : MonoBehaviour
           //transform.position = touchPosition;
         }
     }
-
     //NOTES: FOR A SINGLE TOUCH, PLAYER TELEPORTS TO WHERE U TOUCH - put this in update()
     /*if(Input.touchCount > 0)
     {
